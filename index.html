@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modul Praktikum Mailchimp</title>
+
+  <!-- Bootstrap 5 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- AdminLTE 4 CSS & JS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@4/dist/css/adminlte.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/admin-lte@4/dist/js/adminlte.min.js"></script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
+
+  <style>
+    .navbar { padding: 0.5rem 1rem; }
+    .content { padding: 1.5rem; }
+    #mainContent { animation: fadeIn 0.3s ease-in-out; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    [data-theme="dark"] body {
+      background-color: #1e1e1e;
+      color: #f1f1f1;
+    }
+    [data-theme="dark"] .card {
+      background-color: #2b2b2b;
+      color: #f1f1f1;
+    }
+    [data-theme="dark"] .card-header {
+      background-color: #3a3a3a !important;
+      color: #f1f1f1;
+    }
+    [data-theme="dark"] .card-body {
+      color: #f1f1f1;
+    }
+    [data-theme="dark"] .main-header.navbar {
+      background-color: #343a40;
+    }
+    [data-theme="dark"] .main-sidebar {
+      background-color: #212529;
+    }
+    [data-theme="dark"] .nav-link.active {
+      background-color: #495057 !important;
+    }
+  </style>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-dark">
+    <ul class="navbar-nav w-100">
+      <li class="nav-item">
+        <a class="nav-link" id="toggleSidebar" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+      <li class="nav-item ms-auto">
+        <button id="toggleThemeBtn" class="btn btn-secondary btn-sm"><i class="fas fa-moon"></i></button>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Sidebar -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <a href="#" class="brand-link">
+      <span class="brand-text font-weight-light">Mailchimp Modul</span>
+    </a>
+    <div class="sidebar">
+      <nav class="mt-2">
+        <ul id="menuList" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
+          <li class="nav-item"><a class="nav-link" data-id="tujuan"><i class="nav-icon fas fa-bullseye"></i><p>Tujuan Praktikum</p></a></li>
+          <li class="nav-item"><a class="nav-link" data-id="teori"><i class="nav-icon fas fa-book"></i><p>Teori Singkat</p></a></li>
+          <li class="nav-item has-treeview">
+            <a class="nav-link" href="#"><i class="nav-icon fas fa-laptop-code"></i><p>Langkah Praktikum<i class="right fas fa-angle-left"></i></p></a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item"><a class="nav-link" data-id="akun"><i class="far fa-circle nav-icon"></i><p>Membuat Akun</p></a></li>
+              <li class="nav-item"><a class="nav-link" data-id="audience"><i class="far fa-circle nav-icon"></i><p>Membuat Audience</p></a></li>
+              <li class="nav-item"><a class="nav-link" data-id="segment"><i class="far fa-circle nav-icon"></i><p>Segmentasi</p></a></li>
+              <li class="nav-item"><a class="nav-link" data-id="template"><i class="far fa-circle nav-icon"></i><p>Template Email</p></a></li>
+              <li class="nav-item"><a class="nav-link" data-id="campaign"><i class="far fa-circle nav-icon"></i><p>Kampanye Email</p></a></li>
+              <li class="nav-item"><a class="nav-link" data-id="schedule"><i class="far fa-circle nav-icon"></i><p>Penjadwalan</p></a></li>
+              <li class="nav-item"><a class="nav-link" data-id="analisis"><i class="far fa-circle nav-icon"></i><p>Analisis</p></a></li>
+              <li class="nav-item"><a class="nav-link" data-id="website"><i class="far fa-circle nav-icon"></i><p>Website Edukasi</p></a></li>
+              <li class="nav-item"><a class="nav-link" data-id="fiturlanjutan"><i class="far fa-circle nav-icon"></i><p>Fitur Lanjutan</p></a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" data-id="tugas"><i class="nav-icon fas fa-tasks"></i><p>Tugas Praktikum</p></a></li>
+          <li class="nav-item"><a class="nav-link" data-id="penilaian"><i class="nav-icon fas fa-check-circle"></i><p>Penilaian</p></a></li>
+        </ul>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- Content Wrapper -->
+  <div class="content-wrapper">
+    <section class="content pt-3">
+      <div class="container-fluid">
+        <div id="mainContent"></div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+  const contents = {};
+
+  document.querySelectorAll('[data-id]').forEach(el => {
+    el.addEventListener('click', e => {
+      const id = e.currentTarget.getAttribute('data-id');
+      document.getElementById('mainContent').innerHTML = contents[id] || '<div class="alert alert-danger">Konten tidak ditemukan</div>';
+      document.querySelectorAll('#menuList .nav-link').forEach(a => a.classList.remove('active'));
+      e.currentTarget.classList.add('active');
+    });
+  });
+
+  document.getElementById('toggleThemeBtn').addEventListener('click', () => {
+    const html = document.documentElement;
+    const newTheme = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    html.setAttribute('data-theme', newTheme);
+  });
+
+  document.getElementById('toggleSidebar').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.body.classList.toggle('sidebar-collapse');
+  });
+
+  window.onload = () => {
+    document.querySelector('[data-id="tujuan"]').click();
+  };
+</script>
+</body>
+</html>
