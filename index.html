@@ -34,6 +34,9 @@
       font-family: 'Inter', sans-serif;
       background-color: #f8f9fa;
       color: #1f2d3d;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     .navbar {
@@ -118,6 +121,21 @@
     .nav i {
       width: 20px;
     }
+
+    footer {
+      background-color: #f8f9fa;
+      color: #6c757d;
+      font-size: 0.9rem;
+      text-align: center;
+      padding: 1rem;
+      border-top: 1px solid #dee2e6;
+      transition: background-color 0.3s ease;
+    }
+
+    [data-theme="dark"] footer {
+      background-color: #1f2d3d;
+      color: #f1f1f1;
+    }
   </style>
 </head>
 <body>
@@ -135,7 +153,7 @@
     </ul>
   </nav>
 
-  <div class="d-flex">
+  <div class="d-flex flex-grow-1">
     <nav class="sidebar p-3" id="sidebarMenu">
       <h5 class="text-center">Modul Praktikum</h5>
       <ul class="nav flex-column" id="menuList">
@@ -171,6 +189,12 @@
       </div>
     </main>
   </div>
+
+  <footer>
+    <div class="container">
+      <p class="mb-0">&copy; 2025 Universitas Contoh. Modul Praktikum Digital Marketing &mdash; Program Studi Pendidikan Bahasa Inggris.</p>
+    </div>
+  </footer>
 
   <script>
     const sidebar = document.getElementById('sidebarMenu');
