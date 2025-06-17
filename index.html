@@ -136,6 +136,11 @@
       background-color: #1f2d3d;
       color: #f1f1f1;
     }
+     #currentTime {
+      color: #ffffff;
+      font-weight: 500;
+      margin-right: 1rem;
+    }
   </style>
 </head>
 <body>
@@ -146,6 +151,7 @@
       </li>
       <li class="nav-item mx-auto">
         <span class="navbar-brand">Modul Praktikum</span>
+         <span id="currentTime" class="ms-auto me-3"></span>
       </li>
       <li class="nav-item ms-auto">
         <button id="toggleThemeBtn" class="btn btn-outline-light btn-sm"><i class="fas fa-moon"></i></button>
@@ -236,6 +242,17 @@
       const html = document.documentElement;
       html.setAttribute('data-theme', html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
     });
+      // Display current time
+    function updateClock() {
+      const now = new Date();
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const seconds = now.getSeconds().toString().padStart(2, '0');
+      document.getElementById('currentTime').textContent = `${hours}:${minutes}:${seconds}`;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
   </script>
 </body>
 </html>
